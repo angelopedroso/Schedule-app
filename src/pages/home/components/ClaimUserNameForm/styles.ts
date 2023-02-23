@@ -1,4 +1,14 @@
-import { Box, Text, styled } from '@ignite-ui/react'
+import { Box, Text, styled, keyframes } from '@ignite-ui/react'
+
+const spinner = keyframes({
+  from: {
+    transform: 'rotate(0deg)',
+  },
+
+  to: {
+    transform: 'rotate(360deg)',
+  },
+})
 
 export const Form = styled(Box, {
   display: 'grid',
@@ -10,6 +20,11 @@ export const Form = styled(Box, {
   '@media(max-width: 600px)': {
     gridTemplateColumns: '1fr',
   },
+
+  'svg[data-submitting="true"]': {
+    color: '$ignite300',
+    animation: `${spinner} 1.2s linear infinite`,
+  },
 })
 
 export const FormAnnotation = styled('div', {
@@ -19,7 +34,7 @@ export const FormAnnotation = styled('div', {
     color: '$gray400',
 
     '&[data-error="true"]': {
-      color: '#ed4337',
+      color: '#f75a68',
     },
   },
 })
