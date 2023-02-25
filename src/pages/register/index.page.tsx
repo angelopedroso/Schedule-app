@@ -8,6 +8,8 @@ import { Container, Form, FormError, Header } from './styles'
 import { ArrowRight } from 'phosphor-react'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { api } from '@/lib/axios'
+import { AxiosError } from 'axios'
 
 const registerFormSchema = z.object({
   username: z
@@ -35,7 +37,7 @@ export default function Register() {
     resolver: zodResolver(registerFormSchema),
   })
 
-  const { query } = useRouter()
+  const { query, push } = useRouter()
 
   useEffect(() => {
     if (query.username) {
@@ -43,7 +45,23 @@ export default function Register() {
     }
   }, [query?.username, setValue])
 
-  async function handleRegister(data: registerFormData) {}
+  async function handleRegister(data: registerFormData) {
+    try {
+      await api.post('/users', {
+        name: data.name,
+        username: data.username,
+      })
+
+      await push('/register/connect-calendar')
+    } catch (err) {
+      if (err instanceof AxiosError && err?.response?.data?.message) {
+        alert(err.response.data.message)
+        return
+      }
+
+      console.error(err)
+    }
+  }
 
   return (
     <Container>
@@ -76,7 +94,7 @@ export default function Register() {
             <FormError size="sm">{errors.name.message}</FormError>
           )}
         </label>
-        <Button disabled={isSubmitting}>
+        <Button type="submit" disabled={isSubmitting}>
           Próximo passo
           <ArrowRight />
         </Button>
