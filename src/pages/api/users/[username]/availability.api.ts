@@ -33,12 +33,8 @@ export default async function handler(
 
   if (isPastDate) {
     return res.json({
-<<<<<<< HEAD
       possibleTimes: [],
       availableTimes: [],
-=======
-      availability: [],
->>>>>>> 509dd67f900b28097bb7f47e4571755d68b71955
     })
   }
 
@@ -51,12 +47,8 @@ export default async function handler(
 
   if (!userAvailability) {
     return res.json({
-<<<<<<< HEAD
       possibleTimes: [],
       availableTimes: [],
-=======
-      availability: [],
->>>>>>> 509dd67f900b28097bb7f47e4571755d68b71955
     })
   }
 
@@ -71,7 +63,6 @@ export default async function handler(
     },
   )
 
-<<<<<<< HEAD
   const blockedTimes = await prisma.scheduling.findMany({
     select: {
       date: true,
@@ -92,7 +83,4 @@ export default async function handler(
   })
 
   return res.json({ possibleTimes, availableTimes })
-=======
-  return res.json({ possibleTimes })
->>>>>>> 509dd67f900b28097bb7f47e4571755d68b71955
 }
